@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -8,27 +8,55 @@ from apps.accounts.choices import GenderChoices
 from apps.accounts.managers import UserManager
 from apps.common.models import BaseModel
 
-class User(AbstractBaseUser,PermissionsMixin,BaseModel):
+
+class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     phone = models.CharField(_("phone"), max_length=20, unique=True, validators=[RegexValidator(r"^\+?1?\d{9,15}$")])
-    first_name=models.CharField(verbose_name=_("first_name"),max_length=30,null=True,blank=True)
-    last_name=models.CharField(verbose_name=_("last_name"),max_length=30,null=True,blank=True)
-    gender=models.CharField(verbose_name=_("gender"),max_length=10,choices=GenderChoices.choices,null=True,blank=True)
-    avatar=models.ForeignKey("common.Media",verbose_name=_("avatar"),on_delete=models.SET_NULL,null=True,blank=True,related_name="user_avatars" )
-    bio=models.CharField(verbose_name=_("bio"),max_length=255,null=True,blank=True)
-    age=models.PositiveIntegerField(verbose_name=_("age"),null=True,blank=True)
-    country=models.ForeignKey("common.Country",verbose_name=_("country"),on_delete=models.SET_NULL,null=True,blank=True,related_name="user_countries" )
-    region=models.ForeignKey("common.Region",verbose_name=_("region"),on_delete=models.SET_NULL,null=True,blank=True,related_name="user_regions")
-    is_staff=models.BooleanField(default=False,verbose_name=_("is staff")) 
-    is_active=models.BooleanField(default=True,verbose_name=_("is active"))
-    is_deleted=models.BooleanField(default=False,verbose_name=_("is deleted"))
-    objects=UserManager()
-    USERNAME_FIELD="phone"
-    REQUIRED_FIELDS=[]
+    first_name = models.CharField(verbose_name=_("first_name"), max_length=30, null=True, blank=True)
+    last_name = models.CharField(verbose_name=_("last_name"), max_length=30, null=True, blank=True)
+    gender = models.CharField(
+        verbose_name=_("gender"), max_length=10, choices=GenderChoices.choices, null=True, blank=True
+    )
+    avatar = models.ForeignKey(
+        "common.Media",
+        verbose_name=_("avatar"),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="user_avatars",
+    )
+    bio = models.CharField(verbose_name=_("bio"), max_length=255, null=True, blank=True)
+    age = models.PositiveIntegerField(verbose_name=_("age"), null=True, blank=True)
+    country = models.ForeignKey(
+        "common.Country",
+        verbose_name=_("country"),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="user_countries",
+    )
+    region = models.ForeignKey(
+        "common.Region",
+        verbose_name=_("region"),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="user_regions",
+    )
+    is_staff = models.BooleanField(default=False, verbose_name=_("is staff"))
+    is_active = models.BooleanField(default=True, verbose_name=_("is active"))
+    is_deleted = models.BooleanField(default=False, verbose_name=_("is deleted"))
+    objects = UserManager()
+    USERNAME_FIELD = "phone"
+    REQUIRED_FIELDS = []
+
     class Meta:
-        verbose_name=_("user")
-        verbose_name_plural=_("users")
+        verbose_name = _("user")
+        verbose_name_plural = _("users")
+
     def __str__(self):
         return self.phone
+
+
 class Education(BaseModel):
     name = models.CharField(_("name"), max_length=255)
     type = models.CharField(_("type"), max_length=100)

@@ -6,46 +6,70 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('accounts', '0002_initial'),
-        ('common', '0001_initial'),
+        ("accounts", "0002_initial"),
+        ("common", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='bio',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='bio'),
+            model_name="user",
+            name="bio",
+            field=models.CharField(blank=True, max_length=255, null=True, verbose_name="bio"),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='country',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_countries', to='common.country', verbose_name='country'),
+            model_name="user",
+            name="country",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="user_countries",
+                to="common.country",
+                verbose_name="country",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='first_name',
-            field=models.CharField(blank=True, max_length=30, null=True, verbose_name='first_name'),
+            model_name="user",
+            name="first_name",
+            field=models.CharField(blank=True, max_length=30, null=True, verbose_name="first_name"),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='gender',
-            field=models.CharField(blank=True, choices=[('male', 'Male'), ('female', 'Female')], max_length=10, null=True, verbose_name='gender'),
+            model_name="user",
+            name="gender",
+            field=models.CharField(
+                blank=True,
+                choices=[("male", "Male"), ("female", "Female")],
+                max_length=10,
+                null=True,
+                verbose_name="gender",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='last_name',
-            field=models.CharField(blank=True, max_length=30, null=True, verbose_name='last_name'),
+            model_name="user",
+            name="last_name",
+            field=models.CharField(blank=True, max_length=30, null=True, verbose_name="last_name"),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='phone',
-            field=models.CharField(max_length=20, unique=True, validators=[django.core.validators.RegexValidator('^\\+?1?\\d{9,15}$')], verbose_name='phone'),
+            model_name="user",
+            name="phone",
+            field=models.CharField(
+                max_length=20,
+                unique=True,
+                validators=[django.core.validators.RegexValidator("^\\+?1?\\d{9,15}$")],
+                verbose_name="phone",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='region',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_regions', to='common.region', verbose_name='region'),
+            model_name="user",
+            name="region",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="user_regions",
+                to="common.region",
+                verbose_name="region",
+            ),
         ),
     ]
